@@ -1,0 +1,39 @@
+IPAddress server(10,0,0,138);
+String PostData = "someDataToPost";
+
+if (client.connect(server, 80)) {
+  client.println("POST /Api/AddParking/3 HTTP/1.1");
+  client.println("Host: 10.0.0.138");
+  client.println("User-Agent: Arduino/1.0");
+  client.println("Connection: close");
+  client.print("Content-Length: ");
+  client.println(PostData.length());
+  client.println();
+  client.println(PostData);
+}
+
+
+void loop()  
+{  
+    if (client.connect(server, 80)) {  
+          Serial.println("connected");  
+          delay(1000);  
+          parametri="email=arduino@qq.com"+String(random(0,10000)) + "&name=byArduino";  
+          client.println("POST /test/upload.php HTTP/1.1");  
+          client.println("Host: 10.0.0.9");  
+          client.print("Content-length:");  
+          client.println(parametri.length());  
+          Serial.println(parametri);  
+          client.println("Connection: Close");  
+          client.println("Content-Type: application/x-www-form-urlencoded;");  
+          client.println();  
+          client.println(parametri);    
+     }else{  
+          Serial.println("connection failed");  
+          delay(1000);  
+     }  
+     if(client.connected()){  
+             client.stop();   //disconnect from server  
+     }  
+     delay(1000);  
+}  
